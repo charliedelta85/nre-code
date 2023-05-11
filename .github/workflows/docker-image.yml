@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  # (optional) allow github actions to assume an iam role
+  id-token: write
+
+  # checkout the repository
+  contents: read    
+
 jobs:
 
   build:
@@ -16,5 +23,21 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Build the Docker image
-      run: docker build . --file Containerfile --tag nre-client:$(date +%s)
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2 # More information on this action can be found below in the 'AWS Credentials' section
+      with:
+          role-to-assume: arn:aws:iam::065179189732:role/GithubECRRole
+          aws-region: eu-west-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag and push the Docker image
+      env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: nre/nre_stomp_client
+          IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build . --file Containerfile --tag $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
