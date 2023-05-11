@@ -18,6 +18,7 @@ public class QueueUtils {
         SqsEndpointProvider endpointProvider = new DefaultSqsEndpointProvider();
         SqsEndpointParams endpointParams = SqsEndpointParams.builder().endpoint(vpcEndpoint).region(Region.of(region)).build();
         endpointProvider.resolveEndpoint(endpointParams);
+        System.out.println(queueName);
         GetQueueUrlRequest queueUrlRequest = GetQueueUrlRequest.builder()
                 .queueName(queueName)
                 .build();

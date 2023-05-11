@@ -34,7 +34,7 @@ public class StompClient  implements Runnable {
         MessageConsumer consumer = null;
 
         try {
-            connection = connectionFactory.createConnection("KBc36469e5-929c-4a78-8362-182c00af27dd", "3d2149b8-ba91-48fc-bec9-55343a439969");
+            connection = connectionFactory.createConnection("KBb161ae47-3d3a-49b1-bf80-d83209b7f84a", "85d1127b-6835-4d16-8c96-2129367ecc4b");
             connection.start();
 
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
