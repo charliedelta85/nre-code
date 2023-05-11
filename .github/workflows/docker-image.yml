@@ -16,9 +16,5 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: ls
-      run: ls -l
-
-
     - name: Build the Docker image
-      run: docker build . --file ContainerFile --tag nre-client:$(date +%s)
+      run: docker build . --file Containerfile --tag nre-client:$(date +%s)
