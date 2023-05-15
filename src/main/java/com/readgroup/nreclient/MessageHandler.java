@@ -60,10 +60,10 @@ public class MessageHandler implements MessageListener {
             }
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, null, ex);
-             e.printStackTrace();
+             ex.printStackTrace();
         } catch (JMSException ex) {
             LOG.log(Level.SEVERE, null, ex);
-             e.printStackTrace();
+             ex.printStackTrace();
         }
 
         return null;
