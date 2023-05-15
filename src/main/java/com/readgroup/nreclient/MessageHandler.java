@@ -28,9 +28,10 @@ public class MessageHandler implements MessageListener {
     public void onMessage(Message message) {
 
         StompFrame stompFrame = ((StompJmsMessage)message).getFrame();
-        System.out.println(stompFrame.contentAsString());
-        System.out.println(stompFrame.action().toString());
+       // System.out.println(stompFrame.contentAsString());
+        // System.out.println(stompFrame.action().toString());
         String messageXml = convertToXmlString((BytesMessage)message);
+        System.out.println(messageXml);
         queueUtils.sendMessage(messageXml);
     }
 
