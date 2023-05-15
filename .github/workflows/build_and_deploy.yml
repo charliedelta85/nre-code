@@ -46,3 +46,4 @@ jobs:
       run: |
         docker build . --file Containerfile --tag $REGISTRY/$REPOSITORY:$IMAGE_TAG --tag $REGISTRY/$REPOSITORY:latest
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        docker push $REGISTRY/$REPOSITORY:latest
