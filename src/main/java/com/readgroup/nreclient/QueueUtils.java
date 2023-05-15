@@ -39,8 +39,10 @@ public class QueueUtils {
                 .messageBody(message)
                 .delaySeconds(5)
                 .build();
+        System.out.println("message about to be sent");
 
         sqsClient.sendMessage(sendMsgRequest);
+        System.out.println("message sent");
 
     }
 
