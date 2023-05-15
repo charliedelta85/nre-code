@@ -44,5 +44,5 @@ jobs:
           REPOSITORY: nre/nre_stomp_client
           IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build . --file Containerfile --tag $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        docker build . --file Containerfile --tag $REGISTRY/$REPOSITORY:$IMAGE_TAG --tag $REGISTRY/$REPOSITORY:latest
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
