@@ -8,6 +8,7 @@ import software.amazon.awssdk.services.sqs.endpoints.SqsEndpointProvider;
 import software.amazon.awssdk.services.sqs.endpoints.internal.DefaultSqsEndpointProvider;
 import software.amazon.awssdk.services.sqs.model.*;
 
+import software.amazon.awssdk.auth.credentials.*;
 public class QueueUtils {
 
     final private String queueUrl;
@@ -16,8 +17,7 @@ public class QueueUtils {
 
     public QueueUtils(String queueName, String vpcEndpoint, String region){
         SqsEndpointProvider endpointProvider = new DefaultSqsEndpointProvider();
-          InstanceProfileCredentialsProvider mInstanceProfileCredentialsProvider = new InstanceProfileCredentialsProvider();
-        AWSCredentials credentials = mInstanceProfileCredentialsProvider.getCredentials();
+        ContainerCredentialsProvider containerCredentialsProvider = ContainerCredentialsProvider.builder().build();
         SqsEndpointParams endpointParams = SqsEndpointParams.builder().endpoint(vpcEndpoint).region(Region.of(region)).build();
         endpointProvider.resolveEndpoint(endpointParams);
         System.out.println(queueName);
@@ -27,7 +27,7 @@ public class QueueUtils {
         sqsClient =  SqsClient.builder()
                 .region(Region.of(region))
                 .endpointProvider(endpointProvider)
-                .credentialsProvider(mInstanceProfileCredentialsProvider)
+                .credentialsProvider(containerCredentialsProvider)
                 .build();
         queueUrl = sqsClient.getQueueUrl(queueUrlRequest).queueUrl();
     }
