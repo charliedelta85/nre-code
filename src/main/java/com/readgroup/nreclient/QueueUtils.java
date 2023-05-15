@@ -16,6 +16,8 @@ public class QueueUtils {
 
     public QueueUtils(String queueName, String vpcEndpoint, String region){
         SqsEndpointProvider endpointProvider = new DefaultSqsEndpointProvider();
+          InstanceProfileCredentialsProvider mInstanceProfileCredentialsProvider = new InstanceProfileCredentialsProvider();
+        AWSCredentials credentials = mInstanceProfileCredentialsProvider.getCredentials();
         SqsEndpointParams endpointParams = SqsEndpointParams.builder().endpoint(vpcEndpoint).region(Region.of(region)).build();
         endpointProvider.resolveEndpoint(endpointParams);
         System.out.println(queueName);
@@ -25,6 +27,7 @@ public class QueueUtils {
         sqsClient =  SqsClient.builder()
                 .region(Region.of(region))
                 .endpointProvider(endpointProvider)
+                .credentialsProvider(mInstanceProfileCredentialsProvider)
                 .build();
         queueUrl = sqsClient.getQueueUrl(queueUrlRequest).queueUrl();
     }
