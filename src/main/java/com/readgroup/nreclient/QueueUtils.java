@@ -29,7 +29,8 @@ public class QueueUtils {
                 .endpointProvider(endpointProvider)
                 .credentialsProvider(containerCredentialsProvider)
                 .build();
-        queueUrl = sqsClient.getQueueUrl(queueUrlRequest).queueUrl();
+     //   queueUrl = sqsClient.getQueueUrl(queueUrlRequest).queueUrl();
+         queueUrl = "https://sqs.eu-west-1.amazonaws.com/065179189732/RailUpdatesStompMessages";
     }
 
     public void sendMessage(String message){
