@@ -17,6 +17,7 @@ public class QueueUtils {
 
     public QueueUtils(String queueName, String vpcEndpoint, String region){
         SqsEndpointProvider endpointProvider = new DefaultSqsEndpointProvider();
+        SqsEndpointParams endpointParams = SqsEndpointParams.builder().endpoint(vpcEndpoint).region(Region.of(region)).build();
         endpointProvider.resolveEndpoint(endpointParams);
         System.out.println(queueName);
         GetQueueUrlRequest queueUrlRequest = GetQueueUrlRequest.builder()
@@ -39,7 +40,11 @@ public class QueueUtils {
                 .build();
         System.out.println("message about to ");
 
-        sqsClient.sendMessage(sendMsgRequest);
+        try {
+            sqsClient.sendMessage(sendMsgRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         System.out.println("message sent");
 
     }
