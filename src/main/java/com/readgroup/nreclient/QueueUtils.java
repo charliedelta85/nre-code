@@ -17,8 +17,6 @@ public class QueueUtils {
 
     public QueueUtils(String queueName, String vpcEndpoint, String region){
         SqsEndpointProvider endpointProvider = new DefaultSqsEndpointProvider();
-        ContainerCredentialsProvider containerCredentialsProvider = ContainerCredentialsProvider.builder().build();
-        SqsEndpointParams endpointParams = SqsEndpointParams.builder().endpoint(vpcEndpoint).region(Region.of(region)).build();
         endpointProvider.resolveEndpoint(endpointParams);
         System.out.println(queueName);
         GetQueueUrlRequest queueUrlRequest = GetQueueUrlRequest.builder()
@@ -27,10 +25,10 @@ public class QueueUtils {
         sqsClient =  SqsClient.builder()
                 .region(Region.of(region))
                 .endpointProvider(endpointProvider)
-                .credentialsProvider(containerCredentialsProvider)
                 .build();
-     //   queueUrl = sqsClient.getQueueUrl(queueUrlRequest).queueUrl();
-         queueUrl = "https://sqs.eu-west-1.amazonaws.com/065179189732/RailUpdatesStompMessages";
+        queueUrl = sqsClient.getQueueUrl(queueUrlRequest).queueUrl();
+        System.out.println(queueUrl);
+     //    queueUrl = "https://sqs.eu-west-1.amazonaws.com/065179189732/RailUpdatesStompMessages";
     }
 
     public void sendMessage(String message){
@@ -39,7 +37,7 @@ public class QueueUtils {
                 .messageBody(message)
                 .delaySeconds(5)
                 .build();
-        System.out.println("message about to be sent");
+        System.out.println("message about to ");
 
         sqsClient.sendMessage(sendMsgRequest);
         System.out.println("message sent");
